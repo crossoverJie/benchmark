@@ -42,6 +42,7 @@ import org.apache.pulsar.client.admin.PulsarAdminBuilder;
 import org.apache.pulsar.client.admin.PulsarAdminException;
 import org.apache.pulsar.client.admin.PulsarAdminException.ConflictException;
 import org.apache.pulsar.client.api.ClientBuilder;
+import org.apache.pulsar.client.api.CompressionType;
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.ProducerBuilder;
 import org.apache.pulsar.client.api.PulsarClient;
@@ -120,7 +121,9 @@ public class PulsarBenchmarkDriver implements BenchmarkDriver {
                         .enableBatching(config.producer.batchingEnabled)
                         .batchingMaxPublishDelay(
                                 config.producer.batchingMaxPublishDelayMs, TimeUnit.MILLISECONDS)
-                        .batchingMaxMessages(Integer.MAX_VALUE)
+//                        .batchingMaxMessages(Integer.MAX_VALUE)
+                        .batchingMaxMessages(2000)
+                        .compressionType(CompressionType.LZ4)
                         .batchingMaxBytes(config.producer.batchingMaxBytes)
                         .blockIfQueueFull(config.producer.blockIfQueueFull)
                         .sendTimeout(0, TimeUnit.MILLISECONDS)
